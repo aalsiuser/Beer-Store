@@ -1,0 +1,32 @@
+{
+  "name": "beer_store",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "3.5",
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "bootstrap": "^4.1.1",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "lodash": "^4.17.4",
+    "vue": "^2.5.16",
+    "vue-bootstrap-pagination": "^2.10.3",
+    "vue-loader": "14.2.2",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.16",
+    "vuejs-paginate": "^1.9.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.0.16",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "bootstrap-sass": "^3.3.7",
+    "cross-env": "^5.1",
+    "jquery": "^3.2",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "webpack-dev-server": "2.11.2"
+  }
+}
