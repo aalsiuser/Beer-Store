@@ -10,7 +10,7 @@ Steps to run Application:
 2)Then Intall rails through command /** gem install rails **/
 3)Before starting server run these following commands
 /** bundle install **/
-/** rails db:create **/
+/** rails db:create **
 /** rails db:migrate **/
 4)After intsalling both ruby and also rails then run rails server through command /** rails s **/
 5)After starting Rails Server then run webpack server using command /** bin/webpack-dev-server **/
