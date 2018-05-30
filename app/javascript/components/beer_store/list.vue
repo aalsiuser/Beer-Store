@@ -1,57 +1,58 @@
 <template>
-<div>
-<nav-bar></nav-bar>
 <div id="wrapper" class="toggled-2">
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
-        <div class="card mt-4">
-          <div class="card-body">
-          <div>
-            <div class="form-group ml-1000">
-              <label for="beerNameBox">Beer name :</label>
-              <b-form-input id="beerNameBox" class="form-control check" v-model="searchBeer"
-                  type="text"
-                  placeholder="Enter Beer name"></b-form-input>
-            </div>
-            <div class="form-group">
-              <label for="styleSelect">Select Style :</label>
-              <b-form-select id="styleSelect" class="check" v-model="selected" :options="options">
-                <template slot="first">
-                  <option :value="null">Please select an option</option>
-                </template>
-              </b-form-select>
-            </div>
-            <div class="table-responsive">
-              <div class="table-responsive mt-4 border-top">
-              <b-table striped :items="BeerToRender" :fields="fields">
-                <template slot="#" slot-scope="data">
-                  {{ (currentPage - 1) * 10 + data.index + 1 }}
-                </template>
-                <template slot="action" slot-scope="data">
-                  <b-button class="btn btn-secondary">Add to Cart</b-button>
-                </template>
-              </b-table>
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="card mt-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label for="beerNameBox">Beer name :</label>
+                <b-form-input id="beerNameBox" class="form-control check" v-model="searchBeer"
+                    type="text"
+                    placeholder="Enter Beer name"></b-form-input>
               </div>
             </div>
-            <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" @input="sortData()">
-            </b-pagination>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="styleSelect">Select Style :</label>
+                <b-form-select id="styleSelect" class="check" v-model="selected" :options="options">
+                  <template slot="first">
+                    <option :value="null">Please select an option</option>
+                  </template>
+                </b-form-select>
+              </div>
+            </div>
+            <div class="col-md-4" v-if="cart">
+            <router-link :to="{ name: 'Cart' }">Cart<i class="fa fa-shopping-cart"></i>{{cart.length}}</router-link>
           </div>
           </div>
-        </div>
+          <div class="table-responsive">
+            <div class="table-responsive mt-4 border-top">
+            <b-table striped :items="BeerToRender" :fields="fields">
+              <template slot="No." slot-scope="data">
+                {{ (currentPage - 1) * 10 + data.index + 1 }}
+              </template>
+              <template slot="action" slot-scope="data">
+                <b-button class="btn btn-secondary" @click="addCartData(data.item)">Add to Cart</b-button>
+              </template>
+            </b-table>
+            </div>
+          </div>
+          <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" @input="sortData()">
+          </b-pagination>
+      </div>
     </div>
   </div>
-</div>
+  </div>
 </div>
 </template>
 <script>
 import axios from "axios";
-import NavBar from "./navbar.vue";
 import { isEmpty as _isEmpty, uniq as _uniq } from "lodash";
 
 export default {
-  components: {
-    NavBar
-  },
+  components: {},
   data() {
     return {
       beersData: [],
@@ -63,7 +64,7 @@ export default {
       searchBeer: null,
       fields: [
         {
-          key: "#",
+          key: "No.",
           sortable: true
         },
         {
@@ -76,7 +77,7 @@ export default {
         },
         {
           key: "id",
-          sortable: false
+          sortable: true
         },
         {
           key: "style",
@@ -105,7 +106,6 @@ export default {
         this.firstData = this.beersData.filter(rt => {
           return reg.test(rt.name);
         });
-        console.log("first", this.firstData);
         this.totalRows = this.firstData.length;
         return this.firstData.slice(0, 10);
       } else {
@@ -143,17 +143,29 @@ export default {
           (this.currentPage + 1) * 10
         );
       }
+    },
+
+    addCartData(data) {
+      this.cart.push(data);
+      this.$session.set("cart", this.cart);
+    },
+
+    destroy() {
+      this.$session.remove("cart");
     }
   },
   beforeMount() {
     this.fetchData();
+    if (this.$session.get("cart")) {
+      this.cart = this.$session.get("cart");
+    }
   }
 };
 </script>
 <style scoped>
 .check {
   margin-left: 10px;
-  width: 25%;
+  width: 50%;
 }
 </style>
 

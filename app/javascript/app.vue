@@ -1,14 +1,17 @@
 <template>
   <div>
-    <div class="container-fluid">
+    <nav-bar></nav-bar>
       <router-view></router-view>
-    </div>
   </div>
 </template>
 
 <script>
+import NavBar from "./components/beer_store/navbar.vue";
+
 export default {
-  components: {}
+  components: {
+    NavBar
+  }
 };
 </script>
 

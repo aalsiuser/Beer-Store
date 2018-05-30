@@ -7,6 +7,14 @@ import BootstrapVue from "bootstrap-vue";
 Vue.use(BootstrapVue);
 import Paginate from "vuejs-paginate";
 Vue.component("paginate", Paginate);
+import VueSession from "vue-session";
+Vue.use(VueSession);
+import "font-awesome/css/font-awesome.css";
+var options = {
+  persist: true
+};
+
+Vue.use(VueSession, options);
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
